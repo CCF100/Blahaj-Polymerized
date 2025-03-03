@@ -36,24 +36,24 @@ public class Blahaj {
 	private void onLootTableLoad(LootTableLoadEvent event) {
 		ResourceLocation key = event.getName();
 		LootTable table = event.getTable();
-		if(key.equals(BuiltInLootTables.STRONGHOLD_CROSSING) || key.equals(BuiltInLootTables.STRONGHOLD_CORRIDOR)) {
+		if(key.equals(BuiltInLootTables.STRONGHOLD_CROSSING.location()) || key.equals(BuiltInLootTables.STRONGHOLD_CORRIDOR.location())) {
 			LootPool.Builder pb = LootPool.lootPool()
 					.add(LootItem.lootTableItem(BlahajBlocks.GRAY_SHARK_ITEM.get()).setWeight(5))
 					.add(LootItem.lootTableItem(Items.AIR).setWeight(100));
 			table.addPool(pb.build());
-		} else if(key.equals(BuiltInLootTables.VILLAGE_PLAINS_HOUSE)) {
+		} else if(key.equals(BuiltInLootTables.VILLAGE_PLAINS_HOUSE.location())) {
 			LootPool.Builder pb = LootPool.lootPool()
 					.add(LootItem.lootTableItem(BlahajBlocks.GRAY_SHARK_ITEM.get()))
 					.add(LootItem.lootTableItem(Items.AIR).setWeight(43));
 			table.addPool(pb.build());
-		} else if(key.equals(BuiltInLootTables.VILLAGE_TAIGA_HOUSE) || key.equals(BuiltInLootTables.VILLAGE_SNOWY_HOUSE)) {
+		} else if(key.equals(BuiltInLootTables.VILLAGE_TAIGA_HOUSE.location()) || key.equals(BuiltInLootTables.VILLAGE_SNOWY_HOUSE.location())) {
 			LootPool.Builder pb = LootPool.lootPool()
 					.add(LootItem.lootTableItem(BlahajBlocks.GRAY_SHARK_ITEM.get()).setWeight(5))
 					.add(LootItem.lootTableItem(Items.AIR).setWeight(54));
 			table.addPool(pb.build());
-		} else if(key.equals(BuiltInLootTables.FLETCHER_GIFT)
-				|| key.equals(BuiltInLootTables.BUTCHER_GIFT)
-				|| key.equals(BuiltInLootTables.LEATHERWORKER_GIFT)) {
+		} else if(key.equals(BuiltInLootTables.FLETCHER_GIFT.location())
+				|| key.equals(BuiltInLootTables.BUTCHER_GIFT.location())
+				|| key.equals(BuiltInLootTables.LEATHERWORKER_GIFT.location())) {
 
 			LootPool.Builder pb = LootPool.lootPool()
 					.add(LootItem.lootTableItem(BlahajBlocks.BROWN_BEAR_ITEM.get()).setWeight(5))
