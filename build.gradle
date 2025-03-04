@@ -19,6 +19,10 @@ neoForge {
 		client {
 			client()
 		}
+
+		server {
+			server()
+		}
 	}
 
 	parchment {
