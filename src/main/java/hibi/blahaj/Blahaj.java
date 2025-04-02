@@ -1,6 +1,9 @@
 package hibi.blahaj;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import hibi.blahaj.block.BlahajBlocks;
+import hibi.blahaj.sound.BlahajSoundEvents;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -24,10 +27,12 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 public class Blahaj {
 
 	public static final String MOD_ID = "blahaj";
+	public static final Logger LOGGER = LoggerFactory.getLogger("Blahaj");
 
 	public Blahaj(IEventBus modEventBus, ModContainer modContainer) {
 		BlahajDataComponentTypes.register(modEventBus);
 		BlahajBlocks.register(modEventBus);
+		BlahajSoundEvents.init();
 
 		NeoForge.EVENT_BUS.addListener(this::onTradesLoad);
 		NeoForge.EVENT_BUS.addListener(this::onLootTableLoad);
