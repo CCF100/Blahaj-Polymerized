@@ -2,7 +2,6 @@ package hibi.blahaj.block;
 
 import hibi.blahaj.*;
 import net.minecraft.block.*;
-import net.minecraft.component.*;
 import net.minecraft.component.type.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.player.*;
@@ -10,10 +9,8 @@ import net.minecraft.item.*;
 import net.minecraft.item.tooltip.*;
 import net.minecraft.text.*;
 import net.minecraft.util.*;
-import net.minecraft.world.*;
-import org.jetbrains.annotations.*;
 
-import java.util.*;
+import java.util.function.*;
 
 public class CuddlyItem extends BlockItem {
 
@@ -25,31 +22,25 @@ public class CuddlyItem extends BlockItem {
 	}
 
 	@Override
-	public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
-		super.onCraftByPlayer(stack, world, player);
+	public void onCraftByPlayer(ItemStack stack, PlayerEntity player) {
+		super.onCraftByPlayer(stack, player);
 
-		if (player != null) { // compensate for auto-crafter mods
-			stack.set(BlahajDataComponentTypes.OWNER, player.getName());
+		if (player != null) { // compensate for auto-crafter mods that call the wrong method
+			stack.set(BlahajDataComponentTypes.OWNER, new OwnerComponent(player.getName()));
 		}
 	}
 
 	@Override
-	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-		super.appendTooltip(stack, context, tooltip, type);
+	public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+		super.appendTooltip(stack, context, displayComponent, textConsumer, type);
 
 		if (this.tooltip != null) {
-			tooltip.add(this.tooltip);
+			textConsumer.accept(this.tooltip);
 		}
 
-		@Nullable Text ownerName = stack.get(BlahajDataComponentTypes.OWNER);
-		if (ownerName != null) {
-			@Nullable Text customName = stack.get(DataComponentTypes.CUSTOM_NAME);
-			if (customName == null) {
-				tooltip.add(Text.translatable("tooltip.blahaj.owner.craft", ownerName).formatted(Formatting.GRAY));
-			} else {
-				tooltip.add(Text.translatable("tooltip.blahaj.owner.rename", customName, ownerName).formatted(Formatting.GRAY));
-			}
-		}
+		// this is kinda dum, but I don't really feel like mixin in there
+		// and I haven't found a FAPI event for that exact injection point
+		stack.appendComponentTooltip(BlahajDataComponentTypes.OWNER, context, displayComponent, textConsumer, type);
 	}
 
 	public static final Identifier MINING_SPEED_MODIFIER_ID = Identifier.of(Blahaj.MOD_ID, "base_attack_damage");
