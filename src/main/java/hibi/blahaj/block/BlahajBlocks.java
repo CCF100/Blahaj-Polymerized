@@ -1,6 +1,6 @@
 package hibi.blahaj.block;
 
-import net.fabricmc.fabric.api.blockrenderlayer.v1.*;
+import net.fabricmc.fabric.api.client.rendering.v1.*;
 import net.fabricmc.fabric.api.itemgroup.v1.*;
 import net.minecraft.block.*;
 import net.minecraft.client.render.*;
@@ -73,7 +73,7 @@ public class BlahajBlocks {
 
 	public static void registerClient() {
 		for (Block block : BLOCKS) {
-			BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+			BlockRenderLayerMap.putBlock(block, BlockRenderLayer.CUTOUT);
 		}
 	}
 
