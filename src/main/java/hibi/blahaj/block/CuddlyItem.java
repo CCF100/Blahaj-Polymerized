@@ -2,7 +2,6 @@ package hibi.blahaj.block;
 
 import hibi.blahaj.*;
 import net.minecraft.block.*;
-import net.minecraft.component.*;
 import net.minecraft.component.type.*;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.player.*;
@@ -16,7 +15,7 @@ import net.minecraft.world.*;
 import eu.pb4.polymer.core.api.block.PolymerBlock;
 import org.jetbrains.annotations.*;
 
-import java.util.*;
+import java.util.function.*;
 
 public class CuddlyItem extends FactoryBlockItem {
 
@@ -37,11 +36,11 @@ public class CuddlyItem extends FactoryBlockItem {
 	}
 
 	@Override
-	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-		super.appendTooltip(stack, context, tooltip, type);
+	public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> textConsumer, TooltipType type) {
+		super.appendTooltip(stack, context, displayComponent, textConsumer, type);
 
 		if (this.tooltip != null) {
-			tooltip.add(this.tooltip);
+			textConsumer.accept(this.tooltip);
 		}
 
 		@Nullable
