@@ -26,6 +26,7 @@ import eu.pb4.polymer.core.api.block.PolymerBlock;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class CuddlyItemTrinket extends FactoryBlockItem implements Trinket {
 
@@ -39,8 +40,8 @@ public class CuddlyItemTrinket extends FactoryBlockItem implements Trinket {
 	}
 
 	@Override
-	public void onCraftByPlayer(ItemStack stack, World world, PlayerEntity player) {
-		super.onCraftByPlayer(stack, world, player);
+	public void onCraftByPlayer(ItemStack stack, PlayerEntity player) {
+		super.onCraftByPlayer(stack, player);
 
 		if (Blahaj.DEV_ENV) {
 			var component = TrinketsApi.getTrinketComponent(player).orElse(null).getInventory().get("head")
@@ -49,31 +50,31 @@ public class CuddlyItemTrinket extends FactoryBlockItem implements Trinket {
 			Blahaj.LOGGER.info("Player slot component: " + component.toString());
 		}
 		if (player != null) { // compensate for auto-crafter mods
-			stack.set(BlahajDataComponentTypes.OWNER, player.getName());
+			stack.set(BlahajDataComponentTypes.OWNER, new OwnerComponent(player.getName()));
 		}
 	}
 
 	@Override
-	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-		super.appendTooltip(stack, context, tooltip, type);
-
-		if (this.tooltip != null) {
-			tooltip.add(this.tooltip);
-		}
+	public void appendTooltip(ItemStack stack, TooltipContext context, TooltipDisplayComponent displayComponent, Consumer<Text> consumer, TooltipType type) {
+		super.appendTooltip(stack, context, displayComponent, consumer, type);
 
 		@Nullable
-		Text ownerName = stack.get(BlahajDataComponentTypes.OWNER);
-		// Text ownerName = Text.of("Default");
-		if (ownerName != null) {
-			@Nullable
-			Text customName = stack.get(DataComponentTypes.CUSTOM_NAME);
-			if (customName == null) {
-				tooltip.add(Text.translatable("tooltip.blahaj.owner.craft", ownerName).formatted(Formatting.GRAY));
-			} else {
-				tooltip.add(Text.translatable("tooltip.blahaj.owner.rename", customName, ownerName)
+		OwnerComponent owner = stack.get(BlahajDataComponentTypes.OWNER);
+		if(owner != null){
+			Text ownerName = owner.ownerName;
+			// Text ownerName = Text.of("Default");
+			if (ownerName != null) {
+				@Nullable
+				Text customName = stack.get(DataComponentTypes.CUSTOM_NAME);
+				if (customName == null) {
+					consumer.accept(Text.translatable("tooltip.blahaj.owner.craft", ownerName).formatted(Formatting.GRAY));
+				} else {
+					consumer.accept(Text.translatable("tooltip.blahaj.owner.rename", customName, ownerName)
 						.formatted(Formatting.GRAY));
+				}
 			}
 		}
+
 	}
 
 	public ActionResult use(World world, PlayerEntity user, Hand hand) {

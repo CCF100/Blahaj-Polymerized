@@ -33,7 +33,7 @@ public class CuddlyBlock extends HorizontalFacingBlock implements FactoryBlock {
 
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(4.0, 0.0, 4.0, 12.0, 8.0, 12.0);
 	public static final MapCodec<CuddlyBlock> CODEC = createCodec(CuddlyBlock::new);
-	
+
 	public CuddlyBlock(Settings settings) {
 		super(settings.nonOpaque());
 		this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
@@ -81,7 +81,7 @@ public class CuddlyBlock extends HorizontalFacingBlock implements FactoryBlock {
 	public BlockState getPolymerBlockState(BlockState state, PacketContext context) {
 		return Blocks.BARRIER.getDefaultState();
 	}
-	
+
 	@Override
 	public BlockState getPolymerBreakEventBlockState(BlockState state, PacketContext context) {
         return Blocks.WHITE_WOOL.getDefaultState();
@@ -97,7 +97,7 @@ public class CuddlyBlock extends HorizontalFacingBlock implements FactoryBlock {
 		    public Model(BlockState state) {
             this.main = ItemDisplayElementUtil.createSimple(state.getBlock().asItem());
             this.main.setDisplaySize(1, 1);
-			this.main.setModelTransformation(ModelTransformationMode.NONE);
+			this.main.setModelTransformation(ItemDisplayContext.FIXED);
             var yaw = state.get(FACING).getPositiveHorizontalDegrees();
             this.main.setYaw(yaw);
             this.addElement(this.main);

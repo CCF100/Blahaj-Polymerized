@@ -42,7 +42,7 @@ public class ServerPlayNetworkHandlerMixin {
         }
         ScreenHandler handler = this.player.currentScreenHandler;
         ItemStack hatStack = TrinketsHelper.getHatItem(this.player);
-        if (hatStack != ItemStack.EMPTY && packet.getSlot() == 5) {
+        if (hatStack != ItemStack.EMPTY && packet.slot()  == 5) {
             this.player.networkHandler.sendPacket(
                     new ScreenHandlerSlotUpdateS2CPacket(handler.syncId, handler.nextRevision(), 5, hatStack));
         }
