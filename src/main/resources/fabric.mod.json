@@ -9,7 +9,8 @@
     "infoplayerstart",
     "musicalskele",
     "DaFuqs",
-    "CCF_100"
+    "CCF_100",
+    "Themoonisacheese"
   ],
   "contact": {
     "homepage": "https://github.com/DaFuqs/Blahaj",
@@ -36,5 +37,5 @@
     "polytrinkets": "*",
     "polydex": "*"
   }
-  
+
 }

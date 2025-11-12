@@ -18,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import hibi.blahaj.Blahaj;
 import hibi.blahaj.TrinketsHelper;
 
+import java.util.List;
+
 @Mixin(targets = "net.minecraft.server.network.ServerPlayerEntity$1")
 public class ArmorHeadSlotMixin {
     @Final
@@ -35,8 +37,7 @@ public class ArmorHeadSlotMixin {
     }
 
     @Inject(method = "updateState", at = @At(value = "TAIL"))
-    void modifyHeadSlotItem(ScreenHandler handler, DefaultedList<ItemStack> stacks, ItemStack cursorStack,
-            int[] properties, CallbackInfo ci) {
+    void modifyHeadSlotItem(ScreenHandler handler, List<ItemStack> stacks, ItemStack cursorStack, int[] properties, CallbackInfo ci) {
         if (Blahaj.DEV_ENV) {
             Blahaj.LOGGER.info("modifyHeadSlotItem (ArmorHeadSlotMixin) Mixin called");
         }

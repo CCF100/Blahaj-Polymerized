@@ -17,7 +17,7 @@ public class OwnerComponent implements TooltipAppender {
 	public static final Codec<OwnerComponent> CODEC = TextCodecs.CODEC.xmap(OwnerComponent::new, OwnerComponent::getOwnerName);
 	public static final PacketCodec<RegistryByteBuf, OwnerComponent> PACKET_CODEC = TextCodecs.REGISTRY_PACKET_CODEC.xmap(OwnerComponent::new, OwnerComponent::getOwnerName);
 
-	final Text ownerName;
+	public final Text ownerName;
 
 	public OwnerComponent(Text ownerName) {
 		this.ownerName = ownerName;

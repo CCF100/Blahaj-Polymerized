@@ -2,6 +2,7 @@ package hibi.blahaj;
 
 import net.minecraft.component.*;
 import net.minecraft.registry.*;
+import net.minecraft.text.Text;
 import net.minecraft.util.*;
 
 import java.util.function.*;

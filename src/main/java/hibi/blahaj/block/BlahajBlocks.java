@@ -1,6 +1,10 @@
 package hibi.blahaj.block;
 
+import hibi.blahaj.BlahajDataComponentTypes;
+import hibi.blahaj.OwnerComponent;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.minecraft.block.*;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.text.Text;
@@ -76,10 +80,7 @@ public class BlahajBlocks {
 									.equipmentSlot((entity, stack) -> EquipmentSlot.HEAD),
 							tooltip));
 			ITEMS.add(item);
-		} catch (NoClassDefFoundError e) {
-			Item item = registerRegularCuddlyItem(block, itemKey, id, tooltip);
-			ITEMS.add(item);
-		} catch (ClassNotFoundException e) {
+		} catch (NoClassDefFoundError | ClassNotFoundException e) {
 			Item item = registerRegularCuddlyItem(block, itemKey, id, tooltip);
 			ITEMS.add(item);
 		}
@@ -91,12 +92,11 @@ public class BlahajBlocks {
 	private static Item registerRegularCuddlyItem(Block block, RegistryKey<Item> itemKey, Identifier id,
 			String tooltip) {
 		//Blahaj.LOGGER.warn("Trinkets is not installed! Registering items without Trinket support...");
-		Item item = Registry.register(Registries.ITEM, id,
+		return Registry.register(Registries.ITEM, id,
 				new CuddlyItem(block,
 						new Item.Settings().registryKey(itemKey).useBlockPrefixedTranslationKey().maxCount(1)
 								.attributeModifiers(CuddlyItem.createAttributeModifiers())
 								.equipmentSlot((entity, stack) -> EquipmentSlot.HEAD),
 						tooltip));
-		return item;
 	}
 }
